@@ -43,7 +43,6 @@ def pushTweetAnalisisToDB():
     analisis = utils.analyzeTweet(tweetText)
     tweetData = {
         "url": url,
-        "tweetID": tweetID,
         "createdAt": tweetData["data"]["created_at"],
         "lang": tweetData["data"]["lang"],
         "author": tweetAuthor,
@@ -52,8 +51,8 @@ def pushTweetAnalisisToDB():
         "retweetCount": tweetData["data"]["retweet_count"],
         "analisis": analisis,
     }
-    db.child("tweets").push(tweetData)
-    return "OK"
+    db.child("tweets").child(tweetID).set(tweetData)
+    return tweetID
 
 if __name__ == '__main__':
     app.run(debug=True)

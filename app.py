@@ -33,14 +33,14 @@ def pushUserToDB():
     db.child("users").child(uid).set(userData)
     return "OK"
 
-@app.route('/pushTweetAnalisisToDB', methods=["POST"])
+@app.route('/pushTweetAnalysisToDB', methods=["POST"])
 def pushTweetAnalisisToDB():
     url = request.json["url"]
     tweetID = utils.getTweetID(url)
     tweetAuthor = utils.getTweetAuthor(url)
     tweetData = utils.getTweetData(tweetID)
     tweetText = utils.cleanText(tweetData["data"]["full_text"])
-    analisis = utils.analyzeTweet(tweetText)
+    analysis = utils.analyzeTweet(tweetText)
     tweetData = {
         "url": url,
         "createdAt": tweetData["data"]["created_at"],
@@ -49,10 +49,10 @@ def pushTweetAnalisisToDB():
         "quoteCount": tweetData["data"]["quote_count"],
         "replyCount": tweetData["data"]["reply_count"],
         "retweetCount": tweetData["data"]["retweet_count"],
-        "analisis": analisis,
+        "analysis": analysis,
     }
     db.child("tweets").child(tweetID).set(tweetData)
-    return tweetID
+    return jsonify(tweetID)
 
 if __name__ == '__main__':
     app.run(debug=True)

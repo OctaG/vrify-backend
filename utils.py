@@ -1,8 +1,12 @@
 import requests
 import json
 import re
+import os
+from dotenv import load_dotenv
 
-rapidapi_key = ""
+load_dotenv()
+
+rapidapi_key = os.environ['RAPID_API_KEY']
 
 def getTweetID(url):
     return url.split('/')[-1]

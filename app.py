@@ -1,16 +1,20 @@
 from flask import *
 import pyrebase
+import os
+from dotenv import load_dotenv
 
 import utils
 
+load_dotenv()
+
 config = {
-  "apiKey": "",
-  "authDomain": "",
-  "databaseURL": "",
-  "projectId": "",
-  "storageBucket": "",
-  "messagingSenderId": "",
-  "appId": ""
+  "apiKey": os.environ['API_KEY'],
+  "authDomain": os.environ['AUTH_DOMAIN'],
+  "databaseURL": os.environ['DATABASE_URL'],
+  "projectId": os.environ['PROJECT_ID'],
+  "storageBucket": os.environ['STORAGE_BUCKET'],
+  "messagingSenderId": os.environ['MESSAGING_SENDER_ID'],
+  "appId": os.environ['APP_ID']
 }
 
 firebase = pyrebase.initialize_app(config)

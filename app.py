@@ -74,6 +74,15 @@ def readAllTweetsFromDB():
     tweets = db.child("tweets/").get()
     return jsonify(tweets.val())
 
+@app.route('/readUsersSavedTweets', methods=["GET"])
+def readUsersSavedTweets():
+    tweets = db.child("users/" +  request.args["uid"] + "/savedTweets").get()
+    tweetInfo = []
+    print(tweets.val())
+    for elem in tweets.val().values():
+        tweetInfo.append(db.child("tweets/" + elem).get().val())
+    return jsonify(tweetInfo)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -34,7 +34,7 @@ def pushUserToDB():
     return "OK"
 
 @app.route('/pushTweetAnalysisToDB', methods=["POST"])
-def pushTweetAnalisisToDB():
+def pushTweetAnalysisToDB():
     url = request.json["url"]
     tweetID = utils.getTweetID(url)
     tweetAuthor = utils.getTweetAuthor(url)
@@ -53,6 +53,12 @@ def pushTweetAnalisisToDB():
     }
     db.child("tweets").child(tweetID).set(tweetData)
     return jsonify(tweetID)
+
+@app.route('/readTweetAnalysisFromDB', methods=["GET"])
+def readTweetAnalysisFromDB():
+    analysis = db.child("tweets/" + request.args["tweetID"] + "/analysis").get()
+    return jsonify(analysis.val())
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -2,6 +2,7 @@ from flask import *
 import pyrebase
 import os
 from dotenv import load_dotenv
+from datetime import date
 
 import utils
 
@@ -43,6 +44,8 @@ def pushTweetAnalysisToDB():
     analysis = utils.analyzeTweet(tweetText)
     tweetData = {
         "url": url,
+        "tweetID": tweetID,
+        "lastAnalysis": str(date.today()),
         "createdAt": tweetData["data"]["created_at"],
         "lang": tweetData["data"]["lang"],
         "author": tweetAuthor,

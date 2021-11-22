@@ -66,6 +66,11 @@ def readTweetAnalysisFromDB():
     analysis = db.child("tweets/" + request.args["tweetID"] + "/analysis").get()
     return jsonify(analysis.val())
 
+@app.route('/readAllTweetsFromDB', methods=["GET"])
+def readAllTweetsFromDB():
+    tweets = db.child("tweets/").get()
+    return jsonify(tweets.val())
+
 
 if __name__ == '__main__':
     app.run(debug=True)

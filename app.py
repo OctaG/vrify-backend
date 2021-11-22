@@ -54,6 +54,13 @@ def pushTweetAnalysisToDB():
     db.child("tweets").child(tweetID).set(tweetData)
     return jsonify(tweetID)
 
+@app.route('/saveTweetInUserProfile', methods=["POST"])
+def saveTweetInUserProfile():
+    db.child("users/" + request.json["uid"] + "/savedTweets").push(
+        request.json["tweetID"]
+    )
+    return "OK"
+
 @app.route('/readTweetAnalysisFromDB', methods=["GET"])
 def readTweetAnalysisFromDB():
     analysis = db.child("tweets/" + request.args["tweetID"] + "/analysis").get()
